@@ -1,6 +1,6 @@
 package com.alura.screenMatch.app;
 
-import com.alura.screenMatch.models.series.EpisodeDto;
+import com.alura.screenMatch.models.series.Episode;
 import com.alura.screenMatch.models.series.SeasonDto;
 import com.alura.screenMatch.models.series.SeriesDto;
 import com.alura.screenMatch.service.APIQuery;
@@ -9,7 +9,6 @@ import com.alura.screenMatch.service.DataConverter;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,7 +33,7 @@ public class App {
 
         out.println(series.title());
 
-        printTop5(seasons);
+        printAllEpisodes(seasons);
     }
 
     private SeriesDto fetchSeries (String name) {
@@ -58,13 +57,11 @@ public class App {
         return seasonsSeries;
     }
 
-    private void printTop5 (List<SeasonDto> seasons) {
+    private void printAllEpisodes(List<SeasonDto> seasons) {
         seasons.stream()
                 .flatMap(season -> season.episodes()
                         .stream()
-                        .filter(episode -> !episode.rating().equals("N/A"))
-                        .sorted(Comparator.comparing(EpisodeDto::rating).reversed()))
-                .limit(5)
+                        .map(episode -> new Episode(episode, season.season())))
                 .forEach(out::println);
     }
 
