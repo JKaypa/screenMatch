@@ -8,6 +8,8 @@ import com.alura.screenMatch.service.DataConverter;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -29,11 +31,18 @@ public class App {
         String name = URLEncoder.encode(input.nextLine(), StandardCharsets.UTF_8);
         SeriesDto series = this.fetchSeries(name);
 
-        List<SeasonDto> seasons = fetchSeasons(series.seasons(), name);
-
         out.println(series.title());
 
-        printAllEpisodes(seasons);
+        List<SeasonDto> seasons = fetchSeasons(series.seasons(), name);
+
+        out.println("Write the year you'd like to see the episodes from:");
+
+        var year = Integer.parseInt(input.nextLine());
+        var episodes = getAllEpisodes(seasons);
+
+        filterEpisodesByYear(episodes, year);
+
+
     }
 
     private SeriesDto fetchSeries (String name) {
@@ -57,13 +66,21 @@ public class App {
         return seasonsSeries;
     }
 
-    private void printAllEpisodes(List<SeasonDto> seasons) {
-        seasons.stream()
+    private List<Episode> getAllEpisodes(List<SeasonDto> seasons) {
+        return seasons.stream()
                 .flatMap(season -> season.episodes()
                         .stream()
                         .map(episode -> new Episode(episode, season.season())))
-                .forEach(out::println);
+                .toList();
     }
 
+    private void filterEpisodesByYear (List<Episode> episodes, int year) {
+        var localYear = LocalDate.of(year, 1, 1);
+        episodes.stream()
+                .filter(episode ->
+                        episode.getRelease() != null && episode.getRelease()
+                                .isAfter(localYear))
+                .forEach(out::println);
+    }
 
 }
