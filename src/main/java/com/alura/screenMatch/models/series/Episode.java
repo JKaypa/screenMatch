@@ -39,7 +39,8 @@ public class Episode {
     }
 
     private String getReleaseDate () {
-        return getRelease().format(DateTimeFormatter.ofPattern("E dd MMMM yyyy"));
+        return getRelease()
+                .format(DateTimeFormatter.ofPattern("E dd MMMM yyyy"));
     }
 
     @Override

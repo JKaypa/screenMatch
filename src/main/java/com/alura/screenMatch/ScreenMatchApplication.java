@@ -21,7 +21,7 @@ public class ScreenMatchApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		var app = new App();
 
 		app.startApp();
