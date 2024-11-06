@@ -1,5 +1,6 @@
 package com.alura.screenMatch.models.series;
 
+import com.alura.screenMatch.models.episodes.EpisodeDto;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

@@ -1,4 +1,4 @@
-package com.alura.screenMatch.models.series;
+package com.alura.screenMatch.models.episodes;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

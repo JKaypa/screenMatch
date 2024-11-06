@@ -1,6 +1,6 @@
 package com.alura.screenMatch.app;
 
-import com.alura.screenMatch.models.series.Episode;
+import com.alura.screenMatch.models.episodes.Episode;
 import com.alura.screenMatch.models.series.SeasonDto;
 import com.alura.screenMatch.models.series.SeriesDto;
 import com.alura.screenMatch.service.APIQuery;
@@ -63,12 +63,10 @@ public class App {
         return converter.toObject(json, SeriesDto.class);
     }
 
-    private List<SeasonDto> fetchSeasons (String seasons, String name) {
-        int totalSeasons = Integer.parseInt((seasons));
-
+    private List<SeasonDto> fetchSeasons (int seasons, String name) {
         List<SeasonDto> seasonsSeries = new ArrayList<>();
 
-        for (int i = 1; i <= totalSeasons; i++) {
+        for (int i = 1; i <= seasons; i++) {
             String endpoint = BASE_URL + name + SEASON + i + API_KEY;
             String json = query.getData(endpoint);
             var season = converter.toObject(json, SeasonDto.class);
