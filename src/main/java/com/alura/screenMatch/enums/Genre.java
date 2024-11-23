@@ -9,7 +9,10 @@ public enum Genre {
     FANTASY("Fantasy");
 
 
-    Genre(String name) {}
+    public final String label;
+    Genre(String label) {
+        this.label = label;
+    }
 
     public static Genre fromString (String genre) {
         for (Genre value : Genre.values()) {
@@ -21,3 +24,4 @@ public enum Genre {
         throw new IllegalArgumentException("Genre not found! - " + genre);
     }
 }
+
