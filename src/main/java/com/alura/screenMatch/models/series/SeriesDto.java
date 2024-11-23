@@ -3,7 +3,7 @@ package com.alura.screenMatch.models.series;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.List;
+
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record SeriesDto(@JsonAlias("Title") String title,
@@ -11,7 +11,7 @@ public record SeriesDto(@JsonAlias("Title") String title,
                         @JsonAlias("Director") String director,
                         @JsonAlias("Actors") String actors,
                         @JsonAlias("Plot") String plot,
-                        @JsonAlias("totalSeasons") int seasons,
+                        @JsonAlias("totalSeasons") String seasons,
                         @JsonAlias("Poster") String poster,
                         @JsonAlias("imdbRating") String rating) {
     @Override
