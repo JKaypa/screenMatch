@@ -61,16 +61,16 @@ public class MainApp {
 
     private void printTvSeries () {
         System.out.println(fetchTvSeries());
-
     }
 
     private void printAllEpisodes () {
         var tvSeries = fetchTvSeries();
-        var seasonNumber = "&season=";
+        var seasonQuery = "&season=";
         var name = URLEncoder.encode(tvSeries.title(), StandardCharsets.UTF_8);
+        var seasonNumber = Integer.parseInt(tvSeries.seasons());
 
-        for (int i = 1; i <= tvSeries.seasons(); i++) {
-            var endpoint = BASE_URL + name + seasonNumber + i + API_KEY;
+        for (int i = 1; i <= seasonNumber; i++) {
+            var endpoint = BASE_URL + name + seasonQuery + i + API_KEY;
             var json = query.getData(endpoint);
             var season = serializer.toObject(json, SeasonDto.class);
 
@@ -83,12 +83,4 @@ public class MainApp {
         history.forEach(System.out::println);
     }
 
-//    public static Categoria fromString(String text) {
-//        for (Categoria categoria : Categoria.values()) {
-//            if (categoria.categoriaOmdb.equalsIgnoreCase(text)) {
-//                return categoria;
-//            }
-//        }
-//        throw new IllegalArgumentException("Ninguna categoria encontrada: " + text);
-//    }
 }
