@@ -32,7 +32,7 @@ public class App {
         if (series.title() == null) {
             out.println("Series not found!");
             return;
-        };
+        }
 
         out.println("Name: " + series.title());
 
@@ -63,10 +63,11 @@ public class App {
         return converter.toObject(json, SeriesDto.class);
     }
 
-    private List<SeasonDto> fetchSeasons (int seasons, String name) {
+    private List<SeasonDto> fetchSeasons (String seasons, String name) {
         List<SeasonDto> seasonsSeries = new ArrayList<>();
+        var seasonNumber = Integer.parseInt(seasons);
 
-        for (int i = 1; i <= seasons; i++) {
+        for (int i = 1; i <= seasonNumber; i++) {
             String endpoint = BASE_URL + name + SEASON + i + API_KEY;
             String json = query.getData(endpoint);
             var season = converter.toObject(json, SeasonDto.class);
