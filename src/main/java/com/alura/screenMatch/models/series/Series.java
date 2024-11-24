@@ -11,23 +11,25 @@ import java.util.OptionalDouble;
 public class Series {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
+    private String id;
 
     @Column(unique = true, nullable = false)
-    String title;
+    private String title;
 
     @Enumerated(EnumType.STRING)
-    Genre genres;
-    String director;
-    String actors;
-    String plot;
-    Integer seasons;
-    String poster;
-    Double rating;
+    private Genre genres;
+
+    private  String director;
+    private  String actors;
+    private  String plot;
+    private  Integer seasons;
+    private  String poster;
+    private  Double rating;
 
     @Transient
     List<Episode> episodes;
 
+    public Series(){}
     public Series(SeriesDto series) {
         this.title = series.title();
         this.genres = Genre.fromString(series.genre().split(",")[0].trim());
