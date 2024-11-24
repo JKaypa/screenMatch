@@ -1,7 +1,9 @@
 package com.alura.screenMatch.app;
 
 import com.alura.screenMatch.models.series.SeasonDto;
+import com.alura.screenMatch.models.series.Series;
 import com.alura.screenMatch.models.series.SeriesDto;
+import com.alura.screenMatch.repository.SeriesRepository;
 import com.alura.screenMatch.service.APIQuery;
 import com.alura.screenMatch.service.DataConverter;
 
@@ -18,6 +20,11 @@ public class MainApp {
     private final List<SeriesDto> history = new ArrayList<>();
     private final String BASE_URL = "https://www.omdbapi.com/?t=";
     private final String API_KEY = "&apikey=6c83494f";
+    private final SeriesRepository seriesRepository;
+
+    public MainApp(SeriesRepository seriesRepository) {
+        this.seriesRepository = seriesRepository;
+    }
 
 
     public void start () {
@@ -55,7 +62,9 @@ public class MainApp {
         var json = query.getData(endpoint);
         var tvSeries = serializer.toObject(json, SeriesDto.class);
 
-        history.add(tvSeries);
+        Series series = new Series(tvSeries);
+        seriesRepository.save(series);
+        //history.add(tvSeries);
         return tvSeries;
     }
 
@@ -80,7 +89,9 @@ public class MainApp {
     }
 
     private void printHistory() {
-        history.forEach(System.out::println);
+        seriesRepository.findAll().forEach(System.out::println);
+        //history.forEach(System.out::println);
+
     }
 
 }
