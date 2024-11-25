@@ -1,21 +1,41 @@
 package com.alura.screenMatch.models.episodes;
 
+import com.alura.screenMatch.models.series.Series;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@Entity
 public class Episode {
-    private final Integer season;
-    private final String title;
-    private final Integer episode;
-    private final Double rate;
-    private final LocalDate release;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
-    public Episode(EpisodeDto episode, String season) {
-        this.season = Integer.parseInt(season);
+    private String title;
+    private Integer season;
+    private Integer episode;
+    private Double rate;
+    private LocalDate release;
+
+    @ManyToOne
+    private Series series;
+
+    public Episode(){}
+    public Episode(EpisodeDto episode, int season) {
+        this.season = season;
         this.title = episode.title();
         this.episode = episode.episode();
         this.rate = !episode.rating().equals("N/A") ? Double.parseDouble(episode.rating()) : null;
         this.release = !episode.released().equals("N/A") ? LocalDate.parse(episode.released()) : null;
+    }
+
+    public Series getSeries() {
+        return series;
+    }
+
+    public void setSeries(Series series) {
+        this.series = series;
     }
 
     public Integer getSeason() {
@@ -39,8 +59,12 @@ public class Episode {
     }
 
     private String getReleaseDate () {
-        return getRelease()
-                .format(DateTimeFormatter.ofPattern("E dd MMMM yyyy"));
+        if(getRelease() != null) {
+            return getRelease()
+                    .format(DateTimeFormatter.ofPattern("E dd MMMM yyyy"));
+        }
+
+        return "No date registered";
     }
 
     @Override
