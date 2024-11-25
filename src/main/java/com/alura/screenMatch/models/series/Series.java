@@ -26,7 +26,7 @@ public class Series {
     private  String poster;
     private  Double rating;
 
-    @Transient
+    @OneToMany(mappedBy = "series", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     List<Episode> episodes;
 
     public Series(){}
@@ -41,6 +41,47 @@ public class Series {
         this.rating = OptionalDouble.of(Double.parseDouble(series.rating())).orElse(0);
     }
 
+    public List<Episode> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(List<Episode> episodes) {
+        episodes.forEach(episode -> episode.setSeries(this));
+        this.episodes = episodes;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Genre getGenres() {
+        return genres;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public String getActors() {
+        return actors;
+    }
+
+    public String getPlot() {
+        return plot;
+    }
+
+    public Integer getSeasons() {
+        return seasons;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
     @Override
     public String toString() {
         return
@@ -51,6 +92,7 @@ public class Series {
                ", plot: " + plot +
                ", seasons: " + seasons +
                ", poster: " + poster +
-               ", rating: " + rating;
+               ", rating: " + rating +
+               ", episodes: " + episodes;
     }
 }
