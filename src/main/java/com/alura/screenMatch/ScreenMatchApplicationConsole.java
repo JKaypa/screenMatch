@@ -13,7 +13,7 @@ public class ScreenMatchApplicationConsole implements CommandLineRunner {
 	private SeriesRepository seriesRepository;
 	public static void main(String[] args) {
 		SpringApplication.run(ScreenMatchApplicationConsole.class, args);
-	}
+    }
 
 	@Override
 	public void run(String... args) {
